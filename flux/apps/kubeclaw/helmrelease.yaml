@@ -68,6 +68,8 @@ spec:
           secretKeyRef:
             name: kubeclaw-secrets
             key: ANTHROPIC_API_KEY
+      - name: LITELLM_API_KEY
+        value: sk-disabled-placeholder
     networkPolicy:
       enabled: true
       egress:
