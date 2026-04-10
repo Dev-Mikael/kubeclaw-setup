@@ -43,9 +43,13 @@ spec:
       enabled: true
       egress:
         allowAll: false
-    gatewayAPI:
+    ingress:
       enabled: true
+      className: nginx
+      host: kubeclaw.local
+    gatewayAPI:
+      enabled: false
       controller:
-        enabled: true
+        enabled: false
     observability:
       enabled: false
