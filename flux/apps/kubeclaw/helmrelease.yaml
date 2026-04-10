@@ -47,3 +47,5 @@ spec:
       enabled: true
       controller:
         enabled: true
+    observability:
+      enabled: false
