@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kubeclaw
+  namespace: kubeclaw
+spec:
+  interval: 15m
+  chartRef:
+    kind: OCIRepository
+    name: kubeclaw
+    namespace: flux-system
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  values:
+    secret:
+      create: false
+      existingSecretName: kubeclaw-secrets
+    litellm:
+      enabled: false
+    tailscale:
+      expose:
+        enabled: false
+      ssh:
+        enabled: false
+    resources:
+      requests:
+        cpu: 300m
+        memory: 1Gi
+      limits:
+        cpu: "2"
+        memory: 4Gi
+    extraEnv:
+      - name: ANTHROPIC_API_KEY
+        valueFrom:
+          secretKeyRef:
+            name: kubeclaw-secrets
+            key: ANTHROPIC_API_KEY
+    networkPolicy:
+      enabled: true
+      egress:
+        allowAll: false
+    gatewayAPI:
+      enabled: true
+      controller:
+        enabled: true
